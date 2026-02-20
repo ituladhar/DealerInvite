@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dealer Invite Builder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-100 p-4 lg:p-8 font-sans">
+
+    <div class="max-w-7xl mx-auto">
+        
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Paramount Wireless Invite Builder</h1>
+            <p class="text-lg text-gray-600">Instantly generate and copy customized Strategic Partnership invites for Outlook.</p>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <!-- LEFT PANEL: Editor Controls -->
+            <div id="editor" class="bg-white p-6 rounded-xl shadow-xl border border-gray-200 h-fit">
+                
+                <div class="flex justify-between items-center border-b pb-3 mb-6">
+                    <h2 class="text-xl font-bold text-blue-700">Invite Details</h2>
+                    <button id="copy-btn" onclick="copyEmail()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow transition-colors">
+                        📋 Copy for Outlook
+                    </button>
+                </div>
+
+                <div class="space-y-5">
+                    <!-- Meeting Date -->
+                    <div>
+                        <label for="date-input" class="block text-sm font-bold text-gray-700 mb-1">Meeting Date & Time</label>
+                        <input type="text" id="date-input" class="w-full p-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="e.g. Friday, October 24 at 2:00 PM EST" value="Friday, October 24 at 2:00 PM EST">
+                    </div>
+
+                    <!-- Prospect Name -->
+                    <div>
+                        <label for="prospect-input" class="block text-sm font-bold text-gray-700 mb-1">Prospect Name</label>
+                        <input type="text" id="prospect-input" class="w-full p-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="e.g. John Doe" value="John Doe">
+                    </div>
+
+                    <!-- Optional Note -->
+                    <div>
+                        <label for="note-input" class="block text-sm font-bold text-gray-700 mb-1">Personal Note (Optional Icebreaker)</label>
+                        <textarea id="note-input" rows="2" class="w-full p-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="e.g. It was great connecting with you on LinkedIn!"></textarea>
+                        <p class="text-xs text-gray-500 mt-1">Leave blank to remove from the email.</p>
+                    </div>
+
+                    <!-- Button Controls -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="btn-text-input" class="block text-sm font-bold text-gray-700 mb-1">Button Text</label>
+                            <input type="text" id="btn-text-input" class="w-full p-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" value="Review Dealer Requirements">
+                        </div>
+                        <div>
+                            <label for="btn-link-input" class="block text-sm font-bold text-gray-700 mb-1">Button Link URL</label>
+                            <input type="url" id="btn-link-input" class="w-full p-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" value="https://www.paramountwirelessusa.com/open-a-store/">
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="text-lg font-bold mt-8 mb-4 border-b pb-2 text-blue-700">Footer Details</h3>
+                <div class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="footer-name-input" class="block text-sm font-bold text-gray-700 mb-1">Your Name</label>
+                            <input type="text" id="footer-name-input" class="w-full p-2 border border-gray-300 rounded-lg" value="Ishwor Tuladhar">
+                        </div>
+                        <div>
+                            <label for="footer-title-input" class="block text-sm font-bold text-gray-700 mb-1">Your Title</label>
+                            <input type="text" id="footer-title-input" class="w-full p-2 border border-gray-300 rounded-lg" value="Regional Manager">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="footer-market-input" class="block text-sm font-bold text-gray-700 mb-1">Market / Area</label>
+                        <input type="text" id="footer-market-input" class="w-full p-2 border border-gray-300 rounded-lg" value="Mid-Atlantic Market | Paramount Wireless">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="footer-email-input" class="block text-sm font-bold text-gray-700 mb-1">Email Address</label>
+                            <input type="email" id="footer-email-input" class="w-full p-2 border border-gray-300 rounded-lg" value="ishwor@p-wireless.com">
+                        </div>
+                        <div>
+                            <label for="footer-website-input" class="block text-sm font-bold text-gray-700 mb-1">Website</label>
+                            <input type="text" id="footer-website-input" class="w-full p-2 border border-gray-300 rounded-lg" value="paramountwirelessusa.com">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT PANEL: Live Preview -->
+            <div class="bg-gray-200 p-2 rounded-xl shadow-inner border border-gray-300 flex flex-col h-[850px]">
+                <h2 class="text-sm font-bold text-gray-500 bg-gray-100 p-3 rounded-t-xl text-center uppercase tracking-wider border-b border-gray-300">Live Preview</h2>
+                
+                <!-- Scrollable Container -->
+                <div class="overflow-y-auto no-scrollbar bg-white flex-1 p-4 rounded-b-xl" style="background-color: #f3f4f6;">
+                    
+                    <!-- THE ACTUAL EMAIL TEMPLATE (Wrapped in an ID for copying) -->
+                    <div id="email-preview-content">
+                        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f3f4f6; font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; color: #333333; margin: 0; padding: 20px 0;">
+                            <tr>
+                                <td align="center">
+                                    
+                                    <!-- Main Document Wrapper -->
+                                    <table width="100%" max-width="650" style="max-width: 650px; background-color: #ffffff; border: 1px solid #e5e7eb; border-top: 5px solid #0056b3; box-shadow: 0 4px 6px rgba(0,0,0,0.05);" cellpadding="0" cellspacing="0" border="0">
+                                        
+                                        <!-- Header Logo Section -->
+                                        <tr>
+                                            <td align="center" style="background-color: #111827; padding: 25px 30px 20px 30px;">
+                                                <a href="https://www.paramountwirelessusa.com/" target="_blank" style="text-decoration: none;">
+                                                    <img src="https://s12.gifyu.com/images/b39dH.png" width="140" alt="Paramount Wireless Logo" style="display: block; margin-bottom: 12px; border: 4px solid #ffffff; background-color: #ffffff; border-radius: 50%;">
+                                                </a>
+                                                <h1 style="margin: 0; font-size: 22px; color: #ffffff; font-weight: 300; letter-spacing: 1px;">Strategic Partnership Briefing</h1>
+                                                <p id="preview-date" style="margin: 4px 0 0 0; color: #60a5fa; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700;">Friday, October 24 at 2:00 PM EST</p>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Introduction Copy -->
+                                        <tr>
+                                            <td style="padding: 40px 40px 20px 40px;">
+                                                <p style="margin: 0 0 15px 0; font-size: 16px; color: #111827; font-weight: 600;">Dear <span id="preview-prospect">John Doe</span>,</p>
+                                                
+                                                <p id="preview-note" style="margin: 0 0 15px 0; font-size: 15px; color: #0056b3; line-height: 1.7; font-style: italic; display: none;">
+                                                    <!-- Optional note populates here -->
+                                                </p>
+
+                                                <p style="margin: 0 0 0 0; font-size: 15px; color: #4b5563; line-height: 1.7;">
+                                                    Thank you for exploring a retail partnership with Paramount Wireless. With over three decades of expertise in the prepaid wireless sector, we are actively identifying driven entrepreneurs to expand the Total Wireless footprint, powered by the Verizon 5G network. 
+                                                    <br><br>
+                                                    This introductory meeting is designed to outline our franchise model, discuss the initial capital requirements, and demonstrate how our turnkey operations support can accelerate your ROI.
+                                                </p>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Agenda & Focus Area -->
+                                        <tr>
+                                            <td style="padding: 10px 40px 20px 40px;">
+                                                <p style="margin: 0 0 12px 0; font-size: 15px; color: #111827; font-weight: 700;">Meeting Agenda:</p>
+                                                
+                                                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                                    <tr>
+                                                        <td width="15" valign="top" style="color: #4b5563; font-size: 15px; line-height: 1.6; padding-bottom: 8px;">&bull;</td>
+                                                        <td style="font-size: 15px; color: #4b5563; line-height: 1.6; padding-bottom: 8px;"><strong>The Total Wireless Advantage:</strong> Brand positioning, competitive compensation structures, and uncapped earning potential.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="15" valign="top" style="color: #4b5563; font-size: 15px; line-height: 1.6; padding-bottom: 8px;">&bull;</td>
+                                                        <td style="font-size: 15px; color: #4b5563; line-height: 1.6; padding-bottom: 8px;"><strong>Master Agent Support:</strong> Real estate site selection, turnkey build-outs, and local marketing.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="15" valign="top" style="color: #4b5563; font-size: 15px; line-height: 1.6;">&bull;</td>
+                                                        <td style="font-size: 15px; color: #4b5563; line-height: 1.6;"><strong>The 4-Step Launch Process:</strong> Our proven timeline from signing to your grand opening.</td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Preparation Section -->
+                                        <tr>
+                                            <td style="padding: 10px 40px 30px 40px;">
+                                                <p style="margin: 0 0 12px 0; font-size: 15px; color: #111827; font-weight: 700;">How to Prepare:</p>
+                                                
+                                                <table border="0" cellspacing="0" cellpadding="0" width="100%">
+                                                    <tr>
+                                                        <td width="15" valign="top" style="color: #4b5563; font-size: 15px; line-height: 1.6; padding-bottom: 8px;">&bull;</td>
+                                                        <td style="font-size: 15px; color: #4b5563; line-height: 1.6; padding-bottom: 8px;">Note your preferred geographic markets or target zip codes.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="15" valign="top" style="color: #4b5563; font-size: 15px; line-height: 1.6; padding-bottom: 8px;">&bull;</td>
+                                                        <td style="font-size: 15px; color: #4b5563; line-height: 1.6; padding-bottom: 8px;">Determine your ideal timeline for launching your first location.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="15" valign="top" style="color: #4b5563; font-size: 15px; line-height: 1.6;">&bull;</td>
+                                                        <td style="font-size: 15px; color: #4b5563; line-height: 1.6;">Bring any preliminary questions regarding capital investment or daily operations.</td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Call to Action Button -->
+                                        <tr>
+                                            <td align="center" style="padding: 10px 40px 40px 40px;">
+                                                <a id="preview-btn" href="https://www.paramountwirelessusa.com/open-a-store/" target="_blank" style="display: inline-block; background-color: #0056b3; color: #ffffff; text-decoration: none; padding: 14px 32px; font-size: 13px; font-weight: 600; letter-spacing: 0.5px; border-radius: 4px; text-transform: uppercase;">Review Dealer Requirements</a>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Professional Signature Footer -->
+                                        <tr>
+                                            <td style="background-color: #f9fafb; padding: 30px 40px; border-top: 1px solid #e5e7eb;">
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                    <tr>
+                                                        <td width="75" style="vertical-align: top; padding-right: 15px;">
+                                                            <img src="https://s12.gifyu.com/images/b39dH.png" width="65" alt="Logo" style="display: block;">
+                                                        </td>
+                                                        <td style="vertical-align: top;">
+                                                            <p id="preview-f-name" style="margin: 0; font-weight: 700; color: #111827; font-size: 14px; line-height: 1.2;">Ishwor Tuladhar</p>
+                                                            <p id="preview-f-title" style="margin: 4px 0; color: #0056b3; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Regional Manager</p>
+                                                            <p id="preview-f-market" style="margin: 0; color: #6b7280; font-size: 12px; line-height: 1.5;">Mid-Atlantic Market | Paramount Wireless</p>
+                                                            <p style="margin: 4px 0 0 0; font-size: 12px; line-height: 1.5;">
+                                                                <a id="preview-f-email" href="mailto:ishwor@p-wireless.com" style="color: #4b5563; text-decoration: none;">ishwor@p-wireless.com</a> &nbsp;|&nbsp; 
+                                                                <a id="preview-f-web" href="https://www.paramountwirelessusa.com/" style="color: #0056b3; text-decoration: none; font-weight: 600;">paramountwirelessusa.com</a>
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    
+                                    <!-- Legal/Confidentiality Disclaimer -->
+                                    <table width="100%" max-width="650" style="max-width: 650px;" cellpadding="0" cellspacing="0" border="0">
+                                        <tr>
+                                            <td style="padding: 20px 10px; text-align: center;">
+                                                <p style="margin: 0; color: #9ca3af; font-size: 11px; text-align: center; line-height: 1.4;">
+                                                    CONFIDENTIALITY NOTICE: This invitation and any attachments are confidential and may also be privileged. If you are not the intended recipient, please delete all copies and notify the sender immediately. <br><br>
+                                                    &copy; 2026 Paramount Wireless USA. All rights reserved.
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!-- END OF ACTUAL EMAIL TEMPLATE -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
